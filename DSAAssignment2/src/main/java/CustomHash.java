@@ -1,15 +1,36 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-import static java.util.Objects.hash;
-
-public class Driver {
+public class CustomHash {
     Scanner scanner = new Scanner(System.in);
     CustomNode<Object> head = null;
     CustomList<Object> list = new CustomList<>();
-
-    int[] hashTable;
     HashMap<String, Integer> drinkIds = new HashMap<>();
+    int[] hashTable;
+
+    public CustomHash(int size) {
+        hashTable=new int [size];
+    }
+
+
+
+    public static void main(String[] args) {
+        CustomHash ch = new CustomHash(100);
+        Scanner k = new Scanner(System.in);
+        int item;
+
+        do {
+            System.out.print("Enter an integer: ");
+            item = k.nextInt();
+            if (item != 0) ch.add(item);
+        } while (item != 0); //0=stop entering items...
+
+        System.out.println();
+    }
+
+    public int hash(int key) {
+        return key%hashTable.length;
+    }
 
 
     public static int binarySearch(int[] arr, int x) {
@@ -67,6 +88,10 @@ public class Driver {
         for(int i=0;i<hashTable.length;i++)
             System.out.println(i+". "+hashTable[i]);
     }
+
+
+
+
 
 
 

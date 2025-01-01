@@ -4,6 +4,13 @@ public class Drink<K> {
     public String location;
     public String imageUrl;
 
+    public Drink(String name, String description, String location, String imageUrl) {
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.imageUrl = imageUrl;
+    }
+
     public String getName() {
         return name;
     }

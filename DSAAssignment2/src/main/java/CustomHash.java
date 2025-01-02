@@ -2,36 +2,48 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class CustomHash {
-    Scanner scanner = new Scanner(System.in);
-    CustomNode<Object> head = null;
-    CustomList<Object> list = new CustomList<>();
-    HashMap<String, Integer> drinkIds = new HashMap<>();
     int[] hashTable;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        CustomNode<Object> head = null;
+        CustomList<Object> list = new CustomList<>();
+        HashMap<String, Integer> drinkIds = new HashMap<>();
+        CustomHash ch = new CustomHash(100);
+        Scanner k = new Scanner(System.in);
+        int item;
+        boolean running = true;
+
+
+
+
+        list.add(new Drink<>("NewDrink", "A Drink that is new", "Waterford", "image.com"));
+
+        while (running) {
+            System.out.println("\nPlease choose an option:");
+            System.out.println("1. Add Show");
+            System.out.println("2. Add Performance");
+            System.out.println("3. Add Customer");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+
+        }
+        System.out.println();
+
+    }
+
+
+
+
+    public int hash(int key) {
+        return key%hashTable.length*31;
+    }
 
     public CustomHash(int size) {
         hashTable=new int [size];
     }
-
-
-
-    public static void main(String[] args) {
-        CustomHash ch = new CustomHash(100);
-        Scanner k = new Scanner(System.in);
-        int item;
-
-        do {
-            System.out.print("Enter an integer: ");
-            item = k.nextInt();
-            if (item != 0) ch.add(item);
-        } while (item != 0); //0=stop entering items...
-
-        System.out.println();
-    }
-
-    public int hash(int key) {
-        return key%hashTable.length;
-    }
-
 
     public static int binarySearch(int[] arr, int x) {
         int left = 0;

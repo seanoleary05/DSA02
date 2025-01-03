@@ -1,5 +1,5 @@
 
-
+/*
 
 
 
@@ -93,7 +93,7 @@ public class CustomList<K> implements Iterable<K> {
 
 
 
-
+/*
 
     public void clear() {
         head = null;
@@ -150,4 +150,5 @@ public class CustomList<K> implements Iterable<K> {
     public Iterator<K> iterator() {
         return new CustomIterator<>(head); // passes the head to the iterator
     }
-}
+
+*/

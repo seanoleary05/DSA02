@@ -11,6 +11,11 @@ public class Drink<K> {
         this.imageUrl = imageUrl;
     }
 
+
+    public int compareTo(Drink o) {
+        return this.name.compareTo(o.name);
+    }
+
     public String getName() {
         return name;
     }
@@ -43,5 +48,6 @@ public class Drink<K> {
         this.imageUrl = imageUrl;
     }
 
-aadfsg
+
+
 }

@@ -2,12 +2,14 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class CustomHash {
-    int[] hashTable;
+    Drink[] hashTable;
+
+
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         CustomNode<Object> head = null;
-        CustomList<Object> list = new CustomList<>();
         HashMap<String, Integer> drinkIds = new HashMap<>();
         CustomHash ch = new CustomHash(100);
         Scanner k = new Scanner(System.in);
@@ -17,7 +19,7 @@ public class CustomHash {
 
 
 
-        list.add(new Drink<>("NewDrink", "A Drink that is new", "Waterford", "image.com"));
+       // ch.add(new Drink<>("NewDrink", "A Drink that is new", "Waterford", "image.com"));
 
         while (running) {
             System.out.println("\nPlease choose an option:");
@@ -27,6 +29,12 @@ public class CustomHash {
 
             int choice = scanner.nextInt();
             scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    // Add a new Show to the list
+                   // displayHashTable();
+            }
 
 
         }
@@ -42,25 +50,25 @@ public class CustomHash {
     }
 
     public CustomHash(int size) {
-        hashTable=new int [size];
+        hashTable=new Drink [size];
     }
 
-    public static int binarySearch(int[] arr, int x) {
+    public static int binarySearch(Drink[] arr, Drink x) {
         int left = 0;
         int right = arr.length - 1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
 
-            // Check if x is present at mid
-            if (arr[mid] == x)
+            // Compare x with the element at mid using compareTo()
+            int comparison = x.compareTo(arr[mid]);
+
+            if (comparison == 0)
                 return mid;
 
-            // If x is greater, ignore left half
-            if (arr[mid] < x)
+            if (comparison > 0)
                 left = mid + 1;
 
-                // If x is smaller, ignore right half
             else
                 right = mid - 1;
         }
@@ -71,15 +79,12 @@ public class CustomHash {
 
 
 
-    public int add(int item) {
-        return add(item,item); //Using item as own key
-    }
 
-    public int add(int item, int key) {
+    public int add(Drink item, int key) {
         int home=hash(key),loc;
         loc=home;
         do{
-            if(hashTable[loc]==0) { //Empty - store there
+            if(hashTable[loc]==null) { //Empty - store there
                 System.out.println("Storing "+item+" at "+loc);
                 hashTable[loc]=item;
                 return loc;
@@ -95,7 +100,7 @@ public class CustomHash {
         return -1;  //Table full - add failed!
     }
 
-    public void displayHashTable(){
+    public  void displayHashTable(){
         System.out.println("Hash Table (using Linear Probing)\n=============");
         for(int i=0;i<hashTable.length;i++)
             System.out.println(i+". "+hashTable[i]);

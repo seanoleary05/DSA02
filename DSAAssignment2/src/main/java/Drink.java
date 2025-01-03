@@ -42,4 +42,6 @@ public class Drink<K> {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+aadfsg
 }

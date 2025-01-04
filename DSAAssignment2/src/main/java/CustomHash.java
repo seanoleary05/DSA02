@@ -1,17 +1,63 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
+
 public class CustomHash {
     Drink[] hashTable;
+
+
+    public CustomHash(int size) {
+        hashTable=new Drink [size];
+    }
+
+    public int hash(int key) {
+        return key%hashTable.length;
+    }
+
+  /*  public int hashCode(Drink item) {
+        int hash = 7;
+        hash = 31 * hash + (int) id;
+        hash = 31 * hash + (Drink.name == null ? 0 : name.hashCode());
+        hash = 31 * hash + (email == null ? 0 : email.hashCode());
+        return hash;
+    }
+
+   */
+
+
+    public int add(Drink item, int key) {
+        int home=hash(key),loc;
+        loc=home;
+        do{
+            if(hashTable[loc]==null) { //Empty - store there
+                System.out.println("Storing "+item+" at "+loc);
+                hashTable[loc]=item;
+                return loc;
+            }
+            else { //Collision - probe ahead by one...
+                System.out.println("Can't store "+item+" at "+loc+
+                        ". Trying "+(loc+1)+"...");
+                loc=(loc+1)%hashTable.length;
+            }
+
+        }while(loc!=home);
+
+        return -1;  //Table full - add failed!
+    }
+
+    public void displayHashTable(){
+        System.out.println("Hash Table (using Linear Probing)\n=============");
+        for(int i=0;i<hashTable.length;i++)
+            System.out.println(i+". "+hashTable[i]);
+    }
+
 
 
 
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        CustomNode<Object> head = null;
-        HashMap<String, Integer> drinkIds = new HashMap<>();
-        CustomHash ch = new CustomHash(100);
+        CustomHash ch = new CustomHash(60);
         Scanner k = new Scanner(System.in);
         int item;
         boolean running = true;
@@ -19,22 +65,17 @@ public class CustomHash {
 
 
 
-       // ch.add(new Drink<>("NewDrink", "A Drink that is new", "Waterford", "image.com"));
+       ch.add(new Drink("NewDrink", "A Drink that is new", "Waterford", "image.com"), 2139012);
 
         while (running) {
             System.out.println("\nPlease choose an option:");
-            System.out.println("1. Add Show");
-            System.out.println("2. Add Performance");
-            System.out.println("3. Add Customer");
+            ch.toString();
+            System.out.println();
+            System.out.println();
 
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    // Add a new Show to the list
-                   // displayHashTable();
-            }
 
 
         }
@@ -45,15 +86,11 @@ public class CustomHash {
 
 
 
-    public int hash(int key) {
-        return key%hashTable.length*31;
-    }
 
-    public CustomHash(int size) {
-        hashTable=new Drink [size];
-    }
 
-    public static int binarySearch(Drink[] arr, Drink x) {
+
+
+    public  int binarySearch(Drink[] arr, Drink x) {
         int left = 0;
         int right = arr.length - 1;
 
@@ -80,31 +117,8 @@ public class CustomHash {
 
 
 
-    public int add(Drink item, int key) {
-        int home=hash(key),loc;
-        loc=home;
-        do{
-            if(hashTable[loc]==null) { //Empty - store there
-                System.out.println("Storing "+item+" at "+loc);
-                hashTable[loc]=item;
-                return loc;
-            }
-            else { //Collision - probe ahead by one...
-                System.out.println("Can't store "+item+" at "+loc+
-                        ". Trying "+(loc+1)+"...");
-                loc=(loc+1)%hashTable.length;
-            }
 
-        }while(loc!=home);
 
-        return -1;  //Table full - add failed!
-    }
-
-    public  void displayHashTable(){
-        System.out.println("Hash Table (using Linear Probing)\n=============");
-        for(int i=0;i<hashTable.length;i++)
-            System.out.println(i+". "+hashTable[i]);
-    }
 
 
 

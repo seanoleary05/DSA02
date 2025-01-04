@@ -1,4 +1,4 @@
-public class Drink<K> {
+public class Drink {
     public String name;
     public String description;
     public String location;
@@ -48,6 +48,13 @@ public class Drink<K> {
         this.imageUrl = imageUrl;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Drink{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
 }

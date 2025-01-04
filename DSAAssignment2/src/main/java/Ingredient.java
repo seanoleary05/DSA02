@@ -1,21 +1,21 @@
 public class Ingredient {
-    public String name;
+    public String iName;
     public String description;
     public float ABV;
 
 
-    public Ingredient(String name, String description, float ABV) {
-        this.name = name;
+    public Ingredient(String iName, String description, float ABV) {
+        this.iName = iName;
         this.description = description;
         this.ABV = ABV;
     }
 
-    public String getName() {
-        return name;
+    public String getiName() {
+        return iName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setiName(String iName) {
+        this.iName = iName;
     }
 
     public String getDescription() {
@@ -32,5 +32,14 @@ public class Ingredient {
 
     public void setABV(float ABV) {
         this.ABV = ABV;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "name='" + iName + '\'' +
+                ", description='" + description + '\'' +
+                ", ABV=" + ABV +
+                '}';
     }
 }

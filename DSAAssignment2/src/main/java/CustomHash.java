@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 
 public class CustomHash {
-    Drink[] hashTable;
+    Object[] hashTable;
 
 
     public CustomHash(int size) {
-        hashTable=new Drink [size];
+        hashTable=new Object [size];
     }
 
     public int hash(int key) {
@@ -25,7 +25,7 @@ public class CustomHash {
    */
 
 
-    public int add(Drink item, int key) {
+    public int add(Object item, int key) {
         int home=hash(key),loc;
         loc=home;
         do{
@@ -70,6 +70,7 @@ public class CustomHash {
         ch.add(new Drink("NewDrink3", "A Drink that is new", "Waterford", "image.com"), 2139014);
         ch.add(new Drink("NewDrink4", "A Drink that is new", "Waterford", "image.com"), 2139015);
         ch.add(new Drink("NewDrink5", "A Drink that is new", "Waterford", "image.com"), 2139016);
+        ch.add(new Ingredient("barley","Tibet",45),2134132 );
 
 
         while (running) {

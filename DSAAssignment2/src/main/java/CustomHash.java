@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -75,12 +76,15 @@ public class CustomHash {
 
 
 
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         CustomHash ch = new CustomHash(60);
         Scanner k = new Scanner(System.in);
         int item;
         boolean running = true;
+
 
 
 
@@ -104,7 +108,9 @@ public class CustomHash {
             scanner.nextLine();
 
             switch (choice) {
-                case 1: ch.displayHashTable();
+                case 1:
+
+                    ch.displayHashTable();
 
                 break;
 

@@ -20,16 +20,22 @@ public class Drink {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
+        if ((name.length() > 4) && (name.length() < 25))
         this.name = name;
+
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String description)
+    {
+        if((description.length() > 5) && (description.length() < 70))
+            this.description = description;
+
     }
 
     public String getLocation() {
@@ -37,7 +43,9 @@ public class Drink {
     }
 
     public void setLocation(String location) {
-        this.location = location;
+
+        if ((location.length() > 4) && (location.length() < 25))
+            this.location = location;
     }
 
     public String getImageUrl() {
@@ -45,7 +53,9 @@ public class Drink {
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+
+        if ((imageUrl.length() > 10) && (imageUrl.length() < 100))
+            this.imageUrl = imageUrl;
     }
 
     @Override

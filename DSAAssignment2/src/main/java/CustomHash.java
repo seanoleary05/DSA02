@@ -14,15 +14,9 @@ public class CustomHash {
         return key%hashTable.length;
     }
 
-  /*  public int hashCode(Drink item) {
-        int hash = 7;
-        hash = 31 * hash + (int) id;
-        hash = 31 * hash + (Drink.name == null ? 0 : name.hashCode());
-        hash = 31 * hash + (email == null ? 0 : email.hashCode());
-        return hash;
-    }
 
-   */
+
+
 
 
     public int add(Object item, int key) {
@@ -48,53 +42,9 @@ public class CustomHash {
     public void displayHashTable(){
         System.out.println("Hash Table (using Linear Probing)\n=============");
         for(int i=0;i<hashTable.length;i++)
+            if(hashTable[i]!=null)
             System.out.println(i+". "+hashTable[i]);
     }
-
-
-
-
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        CustomHash ch = new CustomHash(60);
-        Scanner k = new Scanner(System.in);
-        int item;
-        boolean running = true;
-
-
-
-
-       ch.add(new Drink("NewDrink1", "A Drink that is new", "Waterford", "image.com"), 2139012);
-        ch.add(new Drink("NewDrink2", "A Drink that is new", "Waterford", "image.com"), 2139013);
-        ch.add(new Drink("NewDrink3", "A Drink that is new", "Waterford", "image.com"), 2139014);
-        ch.add(new Drink("NewDrink4", "A Drink that is new", "Waterford", "image.com"), 2139015);
-        ch.add(new Drink("NewDrink5", "A Drink that is new", "Waterford", "image.com"), 2139016);
-        ch.add(new Ingredient("barley","Tibet",45),2134132 );
-
-
-        while (running) {
-            System.out.println("\nPlease choose an option:");
-            ch.toString();
-            System.out.println();
-            System.out.println();
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
-
-
-        }
-        System.out.println();
-
-    }
-
-
-
-
-
-
-
 
     public  int binarySearch(Drink[] arr, Drink x) {
         int left = 0;
@@ -119,6 +69,106 @@ public class CustomHash {
         // If we reach here, the element was not present
         return -1;
     }
+
+
+
+
+
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        CustomHash ch = new CustomHash(60);
+        Scanner k = new Scanner(System.in);
+        int item;
+        boolean running = true;
+
+
+
+
+       ch.add(new Drink("NewDrink1", "A Drink that is new", "Waterford", "image.com"), 2139012);
+        ch.add(new Drink("NewDrink2", "A Drink that is new", "Waterford", "image.com"), 2139013);
+        ch.add(new Drink("NewDrink3", "A Drink that is new", "Waterford", "image.com"), 2139014);
+        ch.add(new Drink("NewDrink4", "A Drink that is new", "Waterford", "image.com"), 2139015);
+        ch.add(new Drink("NewDrink5", "A Drink that is new", "Waterford", "image.com"), 2139016);
+        ch.add(new Ingredient("barley","Tibet",45),2134132 );
+
+
+        while (running) {
+
+
+            System.out.println("1. Print out the Entire hashtable without nulls");
+            System.out.println("2. Add a new Drink");
+            System.out.println("3. Add a new Ingredient");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1: ch.displayHashTable();
+
+                break;
+
+                case 2:  // Add a new Drink to the HashTable
+                    System.out.print("Enter Drink Name: ");
+                    String name = scanner.nextLine();
+                    System.out.println("Enter Drink Description: ");
+                    String description = scanner.nextLine();
+                    System.out.println("Enter The Location of the Drinks origin");
+                    String location = scanner.nextLine();
+                    System.out.println("Enter a url of the drink");
+                    String url = scanner.nextLine();
+
+
+                    int hashCode = name.length()*7 + description.length()*13;
+
+
+                    Drink Drink = new Drink(name,description,location,url);
+                    ch.add(Drink,hashCode);
+
+                    System.out.println("Drink added at index." + hashCode);
+                    break;
+
+                case 3:
+                    //Add a new ingredient to the hash Table
+                    System.out.print("Enter Ingredient Name: ");
+                    String iName = scanner.nextLine();
+                    System.out.println("Enter Ingredient Description: ");
+                    String iDescription = scanner.nextLine();
+                    System.out.println("Enter a url of the drink");
+                    float ABV = scanner.nextFloat();
+
+
+                    int iHashCode = iName.length()*7 + iDescription.length()*13;
+
+
+                    Ingredient Ingredient = new Ingredient(iName,iDescription,ABV);
+                    ch.add(Ingredient,iHashCode);
+
+                    System.out.println("Ingredient added at index." + iHashCode);
+                    break;
+
+                case 4:
+
+
+            }
+
+
+
+
+
+        }
+        System.out.println();
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 

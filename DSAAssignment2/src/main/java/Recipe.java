@@ -27,4 +27,5 @@ public class Recipe {
                 ", ingredientQuantities=" + ingredientQuantities +
                 '}';
     }
+    te
 }

@@ -65,7 +65,12 @@ public class CustomHash {
 
 
 
-       ch.add(new Drink("NewDrink", "A Drink that is new", "Waterford", "image.com"), 2139012);
+       ch.add(new Drink("NewDrink1", "A Drink that is new", "Waterford", "image.com"), 2139012);
+        ch.add(new Drink("NewDrink2", "A Drink that is new", "Waterford", "image.com"), 2139013);
+        ch.add(new Drink("NewDrink3", "A Drink that is new", "Waterford", "image.com"), 2139014);
+        ch.add(new Drink("NewDrink4", "A Drink that is new", "Waterford", "image.com"), 2139015);
+        ch.add(new Drink("NewDrink5", "A Drink that is new", "Waterford", "image.com"), 2139016);
+
 
         while (running) {
             System.out.println("\nPlease choose an option:");

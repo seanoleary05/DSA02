@@ -27,8 +27,28 @@ public class DrinkTest {
     }
 
     @org.junit.jupiter.api.Test
-    void setDrink() {
-//
+    void setDrinkDescription() {
+
+        assertEquals("this is a test description", testDrink.getDescription());
+        testDrink.setDescription("1234567890123456789012345678901234567890123456789012345678901234567890"); // upper bound: string length of 70, should fail
+        assertEquals("this is a test description", testDrink.getDescription());
+        testDrink.setDescription("12345");// lower bound: string length of 5, should fail
+        assertEquals("this is a test description", testDrink.getDescription());
+        testDrink.setDescription("A valid description that will pass");// within bound: string of length 34, should pass
+        assertEquals("A valid description that will pass", testDrink.getDescription());
+
+    }
+
+    @org.junit.jupiter.api.Test
+    void setDrinkLocation() {
+        assertEquals("Waterford", testDrink.getLocation());
+        testDrink.setLocation("1234567890123456789012345"); // upper bound: string length of 25, should fail
+        assertEquals("Waterford", testDrink.getLocation());
+        testDrink.setLocation("1234"); // lower bound: string length of 4, should fail
+        assertEquals("Waterford", testDrink.getLocation());
+        testDrink.setLocation("A valid location");// within bound: string of 16, should pass
+        assertEquals("A valid location", testDrink.getLocation());
 
     }
 }
+

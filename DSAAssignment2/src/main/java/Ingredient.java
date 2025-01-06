@@ -1,4 +1,4 @@
-public class Ingredient {
+public class Ingredient implements Comparable<Ingredient> {
     public String iName;
     public String iDescription;
     public float ABV;
@@ -8,6 +8,11 @@ public class Ingredient {
         this.iName = iName;
         this.iDescription = iDescription;
         setABV(ABV);
+    }
+
+
+    public int compareTo(Ingredient o) {
+        return this.iName.compareTo(o.iName);
     }
 
     public String getiName() {

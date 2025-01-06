@@ -1,4 +1,4 @@
-public class Drink {
+public class Drink<K> implements Comparable<Drink> {
     public String name;
     public String description;
     public String location;

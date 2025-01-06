@@ -1,5 +1,5 @@
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomHash {
     Object[] hashTable;
@@ -17,98 +17,87 @@ public class CustomHash {
         loc = home;
         do {
             if (hashTable[loc] == null) { // Empty - store there
-                System.out.println("Storing " + item + " at " + loc);
                 hashTable[loc] = item;
                 return loc;
-            } else { // Collision - probe ahead by one...
-                System.out.println("Can't store " + item + " at " + loc +
-                        ". Trying " + (loc + 1) + "...");
+            } else { // Collision - probe ahead by one
                 loc = (loc + 1) % hashTable.length;
             }
         } while (loc != home);
-
-        return -1;  // Table full - add failed!
+        return -1; // Table full - add failed!
     }
 
-    public void displayHashTable() {
-        System.out.println("Hash Table (using Linear Probing)\n=============");
+    public boolean delete(Object item) {
         for (int i = 0; i < hashTable.length; i++) {
-            if (hashTable[i] != null)
-                System.out.println(i + ". " + hashTable[i]);
-        }
-    }
-
-    // Method to update a Drink in the hash table
-    public void updateDrink(int key, String name, String description, String location, String imageUrl) {
-        int loc = hash(key);
-        int originalLoc = loc;
-
-        while (hashTable[loc] != null) {
-            if (hashTable[loc] instanceof Drink && ((Drink) hashTable[loc]).getName().equals(name)) {
-                Drink drink = (Drink) hashTable[loc];
-                drink.setDescription(description);
-                drink.setLocation(location);
-                drink.setImageUrl(imageUrl);
-                System.out.println("Updated Drink: " + drink);
-                return;
+            if (hashTable[i] != null && hashTable[i].equals(item)) {
+                hashTable[i] = null; // Remove the item
+                return true; // Successful deletion
             }
-            loc = (loc + 1) % hashTable.length;
-            if (loc == originalLoc) break;
         }
-        System.out.println("Drink not found.");
+        return false; // Item not found
     }
 
-    // Method to update an Ingredient in the hash table
-    public void updateIngredient(int key, String iName, String iDescription, float ABV) {
-        int loc = hash(key);
-        int originalLoc = loc;
-
-        while (hashTable[loc] != null) {
-            if (hashTable[loc] instanceof Ingredient && ((Ingredient) hashTable[loc]).getiName().equals(iName)) {
-                Ingredient ingredient = (Ingredient) hashTable[loc];
-                ingredient.setiDescription(iDescription);
-                ingredient.setABV(ABV);
-                System.out.println("Updated Ingredient: " + ingredient);
-                return;
+    public boolean update(Object oldItem, Object newItem) {
+        for (int i = 0; i < hashTable.length; i++) {
+            if (hashTable[i] != null && hashTable[i].equals(oldItem)) {
+                hashTable[i] = newItem; // Replace the old item
+                return true; // Successful update
             }
-            loc = (loc + 1) % hashTable.length;
-            if (loc == originalLoc) break;
         }
-        System.out.println("Ingredient not found.");
+        return false; // Old item not found
     }
 
-    // Method to delete a Drink from the hash table
-    public void deleteDrink(int key, String name) {
-        int loc = hash(key);
-        int originalLoc = loc;
-
-        while (hashTable[loc] != null) {
-            if (hashTable[loc] instanceof Drink && ((Drink) hashTable[loc]).getName().equals(name)) {
-                System.out.println("Deleting Drink: " + hashTable[loc]);
-                hashTable[loc] = null;
-                return;
+    // Search methods (unchanged)
+    public List<Drink> searchDrinksByName(String name) {
+        List<Drink> results = new ArrayList<>();
+        for (Object obj : hashTable) {
+            if (obj instanceof Drink && ((Drink) obj).getName().equalsIgnoreCase(name)) {
+                results.add((Drink) obj);
             }
-            loc = (loc + 1) % hashTable.length;
-            if (loc == originalLoc) break;
         }
-        System.out.println("Drink not found.");
+        return results;
     }
 
-    // Method to delete an Ingredient from the hash table
-    public void deleteIngredient(int key, String iName) {
-        int loc = hash(key);
-        int originalLoc = loc;
-
-        while (hashTable[loc] != null) {
-            if (hashTable[loc] instanceof Ingredient && ((Ingredient) hashTable[loc]).getiName().equals(iName)) {
-                System.out.println("Deleting Ingredient: " + hashTable[loc]);
-                hashTable[loc] = null;
-                return;
+    public List<Drink> searchDrinksByLocation(String location) {
+        List<Drink> results = new ArrayList<>();
+        for (Object obj : hashTable) {
+            if (obj instanceof Drink && ((Drink) obj).getLocation().equalsIgnoreCase(location)) {
+                results.add((Drink) obj);
             }
-            loc = (loc + 1) % hashTable.length;
-            if (loc == originalLoc) break;
         }
-        System.out.println("Ingredient not found.");
+        return results;
     }
 
+    public List<Ingredient> searchIngredientsByName(String name) {
+        List<Ingredient> results = new ArrayList<>();
+        for (Object obj : hashTable) {
+            if (obj instanceof Ingredient && ((Ingredient) obj).getiName().equalsIgnoreCase(name)) {
+                results.add((Ingredient) obj);
+            }
+        }
+        return results;
+    }
+
+    public List<Ingredient> searchIngredientsByABV(float minABV, float maxABV) {
+        List<Ingredient> results = new ArrayList<>();
+        for (Object obj : hashTable) {
+            if (obj instanceof Ingredient) {
+                Ingredient ingredient = (Ingredient) obj;
+                if (ingredient.getABV() >= minABV && ingredient.getABV() <= maxABV) {
+                    results.add(ingredient);
+                }
+            }
+        }
+        return results;
+    }
+
+    // Display a list of results
+    public void displayResults(List<?> results) {
+        if (results.isEmpty()) {
+            System.out.println("No results found.");
+        } else {
+            for (Object obj : results) {
+                System.out.println(obj);
+            }
+        }
+    }
 }

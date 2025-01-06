@@ -1,116 +1,108 @@
+import java.util.List;
 import java.util.Scanner;
 
-public class HelloController{
-public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
-    CustomHash ch = new CustomHash(60);
+public class HelloController {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        CustomHash ch = new CustomHash(60);
 
-    ch.add(new Drink("NewDrink1", "A Drink that is new", "Waterford", "image.com"), 2139012);
-    ch.add(new Drink("NewDrink2", "A Drink that is new", "Waterford", "image.com"), 2139013);
-    ch.add(new Ingredient("barley", "Tibet", 45), 2134132);
+        // Sample data
+        ch.add(new Drink("Coke", "Classic soda drink", "USA", "image.com"), 12345);
+        ch.add(new Drink("Pepsi", "Popular soda drink", "USA", "image2.com"), 54321);
+        ch.add(new Ingredient("Barley", "Main ingredient for beer", 5.0f), 11223);
+        ch.add(new Ingredient("Hops", "Adds bitterness to beer", 0.0f), 44556);
 
-    boolean running = true;
+        boolean running = true;
 
-    while (running) {
-        System.out.println("1. Print out the Entire hashtable without nulls");
-        System.out.println("2. Add a new Drink");
-        System.out.println("3. Add a new Ingredient");
-        System.out.println("4. Update a Drink");
-        System.out.println("5. Update an Ingredient");
-        System.out.println("6. Delete a Drink");
-        System.out.println("7. Delete an Ingredient");
-        System.out.println("8. Exit");
+        while (running) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Print Entire Hashtable");
+            System.out.println("2. Add a new Drink");
+            System.out.println("3. Add a new Ingredient");
+            System.out.println("4. Search Drinks by Name");
+            System.out.println("5. Search Drinks by Location");
+            System.out.println("6. Search Ingredients by Name");
+            System.out.println("7. Search Ingredients by ABV Range");
+            System.out.println("8. Delete an Item");
+            System.out.println("9. Update/Edit an Item");
+            System.out.println("10. Exit");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline character
 
-        switch (choice) {
-            case 1:
-                ch.displayHashTable();
-                break;
+            switch (choice) {
+                case 1:
+                    for (int i = 0; i < ch.hashTable.length; i++) {
+                        if (ch.hashTable[i] != null) {
+                            System.out.println(i + ". " + ch.hashTable[i]);
+                        }
+                    }
+                    break;
 
-            case 2:  // Add a new Drink to the HashTable
-                System.out.print("Enter Drink Name: ");
-                String name = scanner.nextLine();
-                System.out.println("Enter Drink Description: ");
-                String description = scanner.nextLine();
-                System.out.println("Enter The Location of the Drinks origin");
-                String location = scanner.nextLine();
-                System.out.println("Enter a url of the drink");
-                String url = scanner.nextLine();
+                case 2:
+                    System.out.print("Enter Drink Name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter Description: ");
+                    String description = scanner.nextLine();
+                    System.out.print("Enter Location: ");
+                    String location = scanner.nextLine();
+                    System.out.print("Enter Image URL: ");
+                    String url = scanner.nextLine();
 
-                int hashCode = name.length() * 7 + description.length() * 13;
-                Drink drink = new Drink(name, description, location, url);
-                ch.add(drink, hashCode);
-                System.out.println("Drink added at index." + hashCode);
-                break;
+                    int hashCode = name.length() * 7 + description.length() * 13;
+                    ch.add(new Drink(name, description, location, url), hashCode);
+                    System.out.println("Drink added.");
+                    break;
 
-            case 3: // Add a new ingredient
-                System.out.print("Enter Ingredient Name: ");
-                String iName = scanner.nextLine();
-                System.out.println("Enter Ingredient Description: ");
-                String iDescription = scanner.nextLine();
-                System.out.println("Enter ABV: ");
-                float ABV = scanner.nextFloat();
-                scanner.nextLine(); // consume the newline character
+                case 3:
+                    System.out.print("Enter Ingredient Name: ");
+                    String iName = scanner.nextLine();
+                    System.out.print("Enter Description: ");
+                    String iDescription = scanner.nextLine();
+                    System.out.print("Enter ABV: ");
+                    float ABV = scanner.nextFloat();
+                    scanner.nextLine();
 
-                int iHashCode = iName.length() * 7 + iDescription.length() * 13;
-                Ingredient ingredient = new Ingredient(iName, iDescription, ABV);
-                ch.add(ingredient, iHashCode);
-                System.out.println("Ingredient added at index." + iHashCode);
-                break;
+                    int iHashCode = iName.length() * 7 + iDescription.length() * 13;
+                    ch.add(new Ingredient(iName, iDescription, ABV), iHashCode);
+                    System.out.println("Ingredient added.");
+                    break;
 
-            case 4: // Update a Drink
-                System.out.print("Enter the name of the Drink to update: ");
-                String drinkNameToUpdate = scanner.nextLine();
-                System.out.println("Enter new Description: ");
-                String newDescription = scanner.nextLine();
-                System.out.println("Enter new Location: ");
-                String newLocation = scanner.nextLine();
-                System.out.println("Enter new Image URL: ");
-                String newImageUrl = scanner.nextLine();
+                case 8:
+                    System.out.print("Enter the item to delete (Drink or Ingredient name): ");
+                    String deleteName = scanner.nextLine();
+                    boolean deleted = ch.delete(deleteName);
+                    System.out.println(deleted ? "Item deleted successfully." : "Item not found.");
+                    break;
 
-                ch.updateDrink(drinkNameToUpdate.length() * 7 + newDescription.length() * 13, drinkNameToUpdate, newDescription, newLocation, newImageUrl);
-                break;
+                case 9:
+                    System.out.print("Enter the name of the item to update: ");
+                    String updateName = scanner.nextLine();
 
-            case 5: // Update an Ingredient
-                System.out.print("Enter the name of the Ingredient to update: ");
-                String ingredientNameToUpdate = scanner.nextLine();
-                System.out.println("Enter new Description: ");
-                String newIngredientDescription = scanner.nextLine();
-                System.out.println("Enter new ABV: ");
-                float newABV = scanner.nextFloat();
-                scanner.nextLine();
+                    System.out.print("Enter new description: ");
+                    String newDescription = scanner.nextLine();
+                    System.out.print("Enter new location or ABV: ");
+                    String newField = scanner.nextLine();
 
-                ch.updateIngredient(ingredientNameToUpdate.length() * 7 + newIngredientDescription.length() * 13, ingredientNameToUpdate, newIngredientDescription, newABV);
-                break;
+                    // Assume you're handling Drinks and updating its description.
+                    Drink oldDrink = new Drink(updateName, "", "", "");
+                    Drink newDrink = new Drink(updateName, newDescription, newField, "");
+                    boolean updated = ch.update(oldDrink, newDrink);
 
-            case 6: // Delete a Drink
-                System.out.print("Enter the name of the Drink to delete: ");
-                String drinkNameToDelete = scanner.nextLine();
-                ch.deleteDrink(drinkNameToDelete.length() * 7 + drinkNameToDelete.length() * 13, drinkNameToDelete);
-                System.out.print("The Drink deleted successfully.");
-                break;
+                    System.out.println(updated ? "Item updated successfully." : "Item not found.");
+                    break;
 
-            case 7: // Delete an Ingredient
-                System.out.print("Enter the name of the Ingredient to delete: ");
-                String ingredientNameToDelete = scanner.nextLine();
-                ch.deleteIngredient(ingredientNameToDelete.length() * 7 + ingredientNameToDelete.length() * 13, ingredientNameToDelete);
-                System.out.print("The Ingredient Deleted Successfully.");
-                break;
+                case 10:
+                    running = false;
+                    System.out.println("Exiting the program. Goodbye!");
+                    break;
 
-            case 8: // Exit
-                running = false;
-                break;
-
-            default:
-                System.out.println("Invalid choice, please try again.");
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
         }
+
+        scanner.close();
     }
-    scanner.close();
 }
-
-
-
-}
-

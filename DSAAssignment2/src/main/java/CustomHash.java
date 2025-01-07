@@ -26,24 +26,26 @@ public class CustomHash {
         return -1; // Table full - add failed!
     }
 
-    public boolean delete(Object item) {
+    // Delete a drink by name
+    public boolean deleteDrinkByName(String name) {
         for (int i = 0; i < hashTable.length; i++) {
-            if (hashTable[i] != null && hashTable[i].equals(item)) {
-                hashTable[i] = null; // Remove the item
+            if (hashTable[i] instanceof Drink && ((Drink) hashTable[i]).getName().equalsIgnoreCase(name)) {
+                hashTable[i] = null; // Remove the drink
                 return true; // Successful deletion
             }
         }
-        return false; // Item not found
+        return false; // Drink not found
     }
 
-    public boolean update(Object oldItem, Object newItem) {
+    // Delete an ingredient by name
+    public boolean deleteIngredientByName(String name) {
         for (int i = 0; i < hashTable.length; i++) {
-            if (hashTable[i] != null && hashTable[i].equals(oldItem)) {
-                hashTable[i] = newItem; // Replace the old item
-                return true; // Successful update
+            if (hashTable[i] instanceof Ingredient && ((Ingredient) hashTable[i]).getiName().equalsIgnoreCase(name)) {
+                hashTable[i] = null; // Remove the ingredient
+                return true; // Successful deletion
             }
         }
-        return false; // Old item not found
+        return false; // Ingredient not found
     }
 
     // Search methods (unchanged)
@@ -57,15 +59,7 @@ public class CustomHash {
         return results;
     }
 
-    public List<Drink> searchDrinksByLocation(String location) {
-        List<Drink> results = new ArrayList<>();
-        for (Object obj : hashTable) {
-            if (obj instanceof Drink && ((Drink) obj).getLocation().equalsIgnoreCase(location)) {
-                results.add((Drink) obj);
-            }
-        }
-        return results;
-    }
+
 
     public List<Ingredient> searchIngredientsByName(String name) {
         List<Ingredient> results = new ArrayList<>();
@@ -77,17 +71,30 @@ public class CustomHash {
         return results;
     }
 
-    public List<Ingredient> searchIngredientsByABV(float minABV, float maxABV) {
-        List<Ingredient> results = new ArrayList<>();
-        for (Object obj : hashTable) {
-            if (obj instanceof Ingredient) {
-                Ingredient ingredient = (Ingredient) obj;
-                if (ingredient.getABV() >= minABV && ingredient.getABV() <= maxABV) {
-                    results.add(ingredient);
-                }
+    public boolean updateDrinkByName(String name, String newDescription, String newLocation, String newImageUrl) {
+        for (int i = 0; i < hashTable.length; i++) {
+            if (hashTable[i] instanceof Drink && ((Drink) hashTable[i]).getName().equalsIgnoreCase(name)) {
+                Drink drink = (Drink) hashTable[i];
+                if (newDescription != null) drink.setDescription(newDescription);
+                if (newLocation != null) drink.setLocation(newLocation);
+                if (newImageUrl != null) drink.setImageUrl(newImageUrl);
+                return true;
             }
         }
-        return results;
+        return false; // Drink not found
+    }
+
+    // Update ingredient details by name
+    public boolean updateIngredientByName(String name, String newDescription, Float newABV) {
+        for (int i = 0; i < hashTable.length; i++) {
+            if (hashTable[i] instanceof Ingredient && ((Ingredient) hashTable[i]).getiName().equalsIgnoreCase(name)) {
+                Ingredient ingredient = (Ingredient) hashTable[i];
+                if (newDescription != null) ingredient.setiDescription(newDescription);
+                if (newABV != null) ingredient.setABV(newABV);
+                return true;
+            }
+        }
+        return false; // Ingredient not found
     }
 
     // Display a list of results

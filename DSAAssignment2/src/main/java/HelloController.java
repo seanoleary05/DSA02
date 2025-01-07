@@ -23,13 +23,15 @@ public class HelloController {
             System.out.println("5. Search Drinks by Location");
             System.out.println("6. Search Ingredients by Name");
             System.out.println("7. Search Ingredients by ABV Range");
-            System.out.println("8. Delete an Item");
-            System.out.println("9. Update/Edit an Item");
-            System.out.println("10. Exit");
+            System.out.println("8. Delete a Drink");
+            System.out.println("9. Delete an Ingredient");
+            System.out.println("10. Update a Drink");
+            System.out.println("11. Update an Ingredient");
+            System.out.println("12. Exit");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume the newline character
+            scanner.nextLine(); // Consume newline character
 
             switch (choice) {
                 case 1:
@@ -69,31 +71,53 @@ public class HelloController {
                     System.out.println("Ingredient added.");
                     break;
 
-                case 8:
-                    System.out.print("Enter the item to delete (Drink or Ingredient name): ");
-                    String deleteName = scanner.nextLine();
-                    boolean deleted = ch.delete(deleteName);
-                    System.out.println(deleted ? "Item deleted successfully." : "Item not found.");
+                case 8: // Delete Drink
+                    System.out.print("Enter the name of the drink to delete: ");
+                    String drinkName = scanner.nextLine();
+                    boolean drinkDeleted = ch.deleteDrinkByName(drinkName);
+                    System.out.println(drinkDeleted ? "Drink deleted successfully." : "Drink not found.");
                     break;
 
-                case 9:
-                    System.out.print("Enter the name of the item to update: ");
-                    String updateName = scanner.nextLine();
+                case 9: // Delete Ingredient
+                    System.out.print("Enter the name of the ingredient to delete: ");
+                    String ingredientName = scanner.nextLine();
+                    boolean ingredientDeleted = ch.deleteIngredientByName(ingredientName);
+                    System.out.println(ingredientDeleted ? "Ingredient deleted successfully." : "Ingredient not found.");
+                    break;
 
-                    System.out.print("Enter new description: ");
+                case 10: // Update Drink
+                    System.out.print("Enter the name of the drink to update: ");
+                    String drinkiName = scanner.nextLine();
+                    System.out.print("Enter new Description (or press Enter to skip): ");
                     String newDescription = scanner.nextLine();
-                    System.out.print("Enter new location or ABV: ");
-                    String newField = scanner.nextLine();
+                    newDescription = newDescription.isEmpty() ? null : newDescription;
+                    System.out.print("Enter new Location (or press Enter to skip): ");
+                    String newLocation = scanner.nextLine();
+                    newLocation = newLocation.isEmpty() ? null : newLocation;
+                    System.out.print("Enter new Image URL (or press Enter to skip): ");
+                    String newImageUrl = scanner.nextLine();
+                    newImageUrl = newImageUrl.isEmpty() ? null : newImageUrl;
 
-                    // Assume you're handling Drinks and updating its description.
-                    Drink oldDrink = new Drink(updateName, "", "", "");
-                    Drink newDrink = new Drink(updateName, newDescription, newField, "");
-                    boolean updated = ch.update(oldDrink, newDrink);
-
-                    System.out.println(updated ? "Item updated successfully." : "Item not found.");
+                    boolean drinkUpdated = ch.updateDrinkByName(drinkiName, newDescription, newLocation, newImageUrl);
+                    System.out.println(drinkUpdated ? "Drink updated successfully." : "Drink not found.");
                     break;
 
-                case 10:
+                case 11: // Update Ingredient
+                    System.out.print("Enter the name of the ingredient to update: ");
+                    String ingredientiName = scanner.nextLine();
+                    System.out.print("Enter new Description (or press Enter to skip): ");
+                    String newIngredientDescription = scanner.nextLine();
+                    newIngredientDescription = newIngredientDescription.isEmpty() ? null : newIngredientDescription;
+                    System.out.print("Enter new ABV (or press -1 to skip): ");
+                    float newABV = scanner.nextFloat();
+                    scanner.nextLine();
+                    Float finalABV = newABV == -1 ? null : newABV;
+
+                    boolean ingredientUpdated = ch.updateIngredientByName(ingredientiName, newIngredientDescription, finalABV);
+                    System.out.println(ingredientUpdated ? "Ingredient updated successfully." : "Ingredient not found.");
+                    break;
+
+                case 12:
                     running = false;
                     System.out.println("Exiting the program. Goodbye!");
                     break;
@@ -102,6 +126,8 @@ public class HelloController {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
+
+
 
         scanner.close();
     }

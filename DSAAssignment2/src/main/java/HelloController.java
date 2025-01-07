@@ -22,7 +22,9 @@ public class HelloController {
             System.out.println("5. Delete an Ingredient");
             System.out.println("6. Update a Drink");
             System.out.println("7. Update an Ingredient");
-            System.out.println("8. Exit");
+            System.out.println("8. Search Drinks by Name");
+            System.out.println("9. Search Ingredients by Name");
+            System.out.println("10. Exit");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -112,7 +114,19 @@ public class HelloController {
                     System.out.println(ingredientUpdated ? "Ingredient updated successfully." : "Ingredient not found.");
                     break;
 
-                case 8: // Exit
+                case 8: // Search drinks by name
+                    System.out.print("Enter drink name to search: ");
+                    String searchDrinkName = scanner.nextLine();
+                    ch.displayResults(ch.searchDrinksByName(searchDrinkName));
+                    break;
+
+                case 9: // Search ingredients by name
+                    System.out.print("Enter ingredient name to search: ");
+                    String searchIngredientName = scanner.nextLine();
+                    ch.displayResults(ch.searchIngredientsByName(searchIngredientName));
+                    break;
+
+                case 10: // Exit
                     running = false;
                     System.out.println("Exiting the program. Goodbye!");
                     break;
